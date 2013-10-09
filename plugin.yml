@@ -1,0 +1,3 @@
+name: MaxPlugin
+main: com.romanmt.maxplugin.MaxPlugin
+version: 1.0
