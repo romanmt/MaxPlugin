@@ -16,7 +16,7 @@ public final class MaxPlugin extends JavaPlugin {
 	}
 
 
-	private void generateCube(Location loc, int length){
+	private void generateCube(Location loc, int length, Material material){
 		// Set one corner of the cube to the given location.
 		// Uses getBlockN() instead of getN() to avoid casting to an int later.
 		int x1 = loc.getBlockX();
@@ -28,6 +28,8 @@ public final class MaxPlugin extends JavaPlugin {
 		int y2 = y1 + length;
 		int z2 = z1 + length;
 
+		material = (material == null) ? Material.DIAMOND : material;
+		getLogger().info("" + material);
 		World world = loc.getWorld();
 		// Loop over the cube in the x dimension.
 		for (int xPoint = x1; xPoint <= x2; xPoint++) {
@@ -38,7 +40,7 @@ public final class MaxPlugin extends JavaPlugin {
 					// Get the block that we are currently looping over.
 					Block currentBlock = world.getBlockAt(xPoint, yPoint, zPoint);
 					// Set the block to type 57 (Diamond block!)
-					currentBlock.setType(Material.DIAMOND_BLOCK);
+					currentBlock.setType(material);
 				}
 			}
 		}
@@ -47,6 +49,7 @@ public final class MaxPlugin extends JavaPlugin {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
+
 		// TODO Auto-generated method stub
 		if(command.getName().equalsIgnoreCase("build")){
 			if (!(sender instanceof Player)) {
@@ -56,10 +59,15 @@ public final class MaxPlugin extends JavaPlugin {
 				Location loc = player.getLocation();
 				loc.setY(loc.getY() + 15);
 				int size = 10;
+				Material material = null;
 				if(args.length > 0)
+				{
+					String materialName = args[1].toUpperCase();
 					size = Integer.parseInt(args[0]);
+					material = Material.getMaterial(materialName);
+				}
 				getLogger().info("cube size: " + size);
-				generateCube(loc, size);
+				generateCube(loc, size, material);
 				// do something
 
 			}
@@ -68,6 +76,4 @@ public final class MaxPlugin extends JavaPlugin {
 		// If this hasn't happened the a value of false will be returned.
 		return super.onCommand(sender, command, label, args);
 	}
-
-
 }
