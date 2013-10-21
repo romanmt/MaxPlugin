@@ -15,7 +15,6 @@ public final class MaxPlugin extends JavaPlugin {
 		getLogger().info("BUDDER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
 
-
 	private void generateCube(Location loc, int length, Material material){
 		// Set one corner of the cube to the given location.
 		// Uses getBlockN() instead of getN() to avoid casting to an int later.
@@ -28,8 +27,6 @@ public final class MaxPlugin extends JavaPlugin {
 		int y2 = y1 + length;
 		int z2 = z1 + length;
 
-		material = (material == null) ? Material.DIAMOND : material;
-		getLogger().info("" + material);
 		World world = loc.getWorld();
 		// Loop over the cube in the x dimension.
 		for (int xPoint = x1; xPoint <= x2; xPoint++) {
@@ -39,7 +36,7 @@ public final class MaxPlugin extends JavaPlugin {
 				for (int zPoint = z1; zPoint <= z2; zPoint++) {
 					// Get the block that we are currently looping over.
 					Block currentBlock = world.getBlockAt(xPoint, yPoint, zPoint);
-					// Set the block to type 57 (Diamond block!)
+					// Set the block to the specified material
 					currentBlock.setType(material);
 				}
 			}
@@ -50,7 +47,6 @@ public final class MaxPlugin extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
 
-		// TODO Auto-generated method stub
 		if(command.getName().equalsIgnoreCase("build")){
 			if (!(sender instanceof Player)) {
 				sender.sendMessage("This command can only be run by a player.");
@@ -65,15 +61,13 @@ public final class MaxPlugin extends JavaPlugin {
 					String materialName = args[1].toUpperCase();
 					size = Integer.parseInt(args[0]);
 					material = Material.getMaterial(materialName);
+					material = (material == null) ? Material.DIAMOND : material;
 				}
 				getLogger().info("cube size: " + size);
 				generateCube(loc, size, material);
-				// do something
-
 			}
 			return true;
-		} //If this has happened the function will return true.
-		// If this hasn't happened the a value of false will be returned.
+		}
 		return super.onCommand(sender, command, label, args);
 	}
 }
