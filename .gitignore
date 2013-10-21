@@ -4,3 +4,15 @@
 *.jar
 *.war
 *.ear
+
+# Directories #
+/build/
+/bin/
+target/
+  
+# OS Files #
+.DS_Store
+   
+# Eclipse Files #
+.project
+.classpath
