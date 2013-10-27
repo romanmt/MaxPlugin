@@ -59,7 +59,12 @@ public final class MaxPlugin extends JavaPlugin {
 				if(args.length > 0)
 				{
 					String materialName = args[1].toUpperCase();
-					size = Integer.parseInt(args[0]);
+					try {
+						size = Integer.parseInt(args[0]);
+					}
+					catch(Exception e) {
+						sender.sendMessage("The seconds parameter must be a number.");
+					}
 					material = Material.getMaterial(materialName);
 					material = (material == null) ? Material.DIAMOND : material;
 				}
